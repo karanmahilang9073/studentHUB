@@ -22,9 +22,7 @@ if (isset($_GET['search']) && $_GET['search'] != '') {
 
 <form method="GET">
     <input type="text" name="search" placeholder="Search by name" value=" <?= htmlspecialchars($_GET['search'] ?? '') ?>" class="p-2 border-2 border-gray-300 rounded bg-white text-black">
-    <button class="bg-blue-500 text-white px-4 py-2 rounded">
-       Search
-    </button>
+    <button class="bg-blue-500 text-white px-4 py-2 rounded">Search</button>
 </form>
 <br>
 
