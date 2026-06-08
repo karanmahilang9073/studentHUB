@@ -1,13 +1,13 @@
-<a href="index.php">Home</a> |
-<a href="students/create.php">Add Student</a>
-<hr>
-
 <?php
 require_once 'config/db.php';
 
 if (isset($_GET['search']) && $_GET['search'] != '') {
-    $search = $_GET['search'];
-    $result = mysqli_query($conn, "SELECT * FROM students WHERE full_name LIKE '%$search%'");
+    $search = "%" . $_GET['search'] . "%";
+    $sql = "SELECT * FROM students WHERE full_name LIKE ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $search);
+    $stmt->execute();
+    $result = $stmt->get_result();
 } else {
     $result = mysqli_query($conn, "SELECT * FROM students");
 }
@@ -21,16 +21,10 @@ if (isset($_GET['search']) && $_GET['search'] != '') {
 <br><br>
 
 <form method="GET">
-    <input
-    type="text"
-    name="search"
-    placeholder="Search by name"
-    value="<?= $_GET['search'] ?? '' ?>"
-    class="border p-2 rounded"
->
+    <input type="text" name="search" placeholder="Search by name" value=" <?= htmlspecialchars($_GET['search'] ?? '') ?>" class="p-2 border-2 border-gray-300 rounded bg-white text-black">
     <button class="bg-blue-500 text-white px-4 py-2 rounded">
-    Search
-</button>
+       Search
+    </button>
 </form>
 <br>
 

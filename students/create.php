@@ -8,38 +8,40 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $email = $_POST['email'];
     $phone = $_POST['phone'];
     $course = $_POST['course'];
-    $sql = "INSERT INTO students(full_name, email, phone, course) VALUES('$full_name', '$email','$phone','$course')";
-    if (mysqli_query($conn, $sql)) {
+    $sql = "INSERT INTO students(full_name, email, phone, course) VALUES(?,?,?,?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssss", $full_name, $email, $phone, $course);
+    if ($stmt->execute()) {
         echo 'student  added successfully';
     }else {
-        echo mysqli_error($conn);
+        echo $stmt->error;
     }
+    $stmt->close();
 }
 ?>
 
-<form method="POST">
-    <div class="mb-4">
-        <input type="text" name="full_name" class="border p-2 rounded w-full" placeholder="full name">
+<form method="POST" class="bg-white p-8 rounded-lg shadow-md">
+    <div class="mb-5">
+        <label class="block text-gray-700 font-semibold mb-2">Full name</label>
+        <input type="text" name="full_name" class="w-full py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue--500" placeholder="enter full name">
     </div>
-    <br><br>
-    <div class="mb-4">
-        <input type="text" name="email" class="border p-2 rounded w-full" placeholder="email">
+    <div class="mb-5">
+        <label class="block text-gray-700 font-semibold mb-2">Email</label>
+        <input type="email" name="email" class="w-full py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue--500" placeholder="enter email">
     </div>
-    <br><br>
-    <div class="mb-4">
-        <input type="text" name="phone" class="border p-2 rounded w-full" placeholder="phone">
+    <div class="mb-5">
+        <label class="block text-gray-700 font-semibold mb-2">Phone</label>
+        <input type="text" name="phone" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" placeholder="Enter phone number">
     </div>
-    <br><br>
-    <div class="mb-4">
-        <input type="text" name="course" class="border p-2 rounded w-full" placeholder="course">
+    <div class="mb-6">
+        <label class="block text-gray-700 font-semibold mb-2">Course</label>
+        <input type="text" name="course" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" placeholder="Enter course">
     </div>
-    <br><br>
-    <button
-    type="submit"
-    class="bg-green-500 text-white px-4 py-2 rounded mt-4"
->
-    Add Student
-</button>
+    
+    <div class="flex gap-3">
+        <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold px-6 py-2 rounded-lg">Add Student</button>
+        <a href="../index.php" class="bg-gray-500 hover:bg-gray-600 text-white font-bold px-6 py-2 rounded-lg">Cancel</a>
+    </div>
 </form>
 
 
