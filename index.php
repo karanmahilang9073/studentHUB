@@ -16,11 +16,12 @@ if (isset($_GET['search']) && $_GET['search'] != '') {
 
 <?php require_once 'includes/header.php'; ?>
 
+<h1 class="text-3xl font-bold mb-4">Student Management System</h1>
+
 <?php if(isset($_SESSION['username'])): ?>
     <p class="mb-4 text-gray-600 text-3xl">Welcome, <strong><?= htmlspecialchars($_SESSION['username'])?></strong></p>
 <?php endif;?>
 
-<h1 class="text-3xl font-bold mb-4">Student Management System</h1>
 
 
 <a href="students/create.php" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded font-semibold">Add Student</a>
@@ -56,10 +57,10 @@ $count = mysqli_fetch_assoc($countResult);
             <td class="border p-2"><?= $row['email'] ?></td>
             <td class="border p-2"><?= $row['phone'] ?></td>
             <td class="border p-2"><?= $row['course'] ?></td>
-            <td class="border p-2">
-                <a href="students/edit.php?id=<?= $row['id'] ?>">Edit</a>
+            <td class="border p-2 flex gap-2 ">
+                <a href="students/edit.php?id=<?= $row['id'] ?>" class="bg-yellow-500 hover:bg-yellow-600 text-white rounded px-3 py-1">Edit</a>
                 <a href="students/delete.php?id=<?= $row['id'] ?>"
-                    onclick="return confirm('Are you sure?')">
+                    onclick="return confirm('Are you sure?')" class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded text-white">
                     Delete
                 </a>
             </td>
