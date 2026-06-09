@@ -15,6 +15,11 @@ if (isset($_GET['search']) && $_GET['search'] != '') {
 ?>
 
 <?php require_once 'includes/header.php'; ?>
+
+<?php if(isset($_SESSION['username'])): ?>
+    <p class="mb-4 text-gray-600 text-3xl">Welcome, <strong><?= htmlspecialchars($_SESSION['username'])?></strong></p>
+<?php endif;?>
+
 <h1 class="text-3xl font-bold mb-4">Student Management System</h1>
 
 
