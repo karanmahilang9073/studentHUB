@@ -1,4 +1,4 @@
-<footer class="bg-gray-800 text-white py-8">
+<footer class="fixed bottom-0 left-0 right-0 bg-gray-800 text-white py-10">
     <div class="max-w-6xl mx-auto px-4">
         <div class="flex justify-between item-center">
             <p class="text-sm">&copy; 2026 studentHUB. All right reserved</p>

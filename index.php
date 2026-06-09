@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once 'config/db.php';
 
 if (isset($_GET['search']) && $_GET['search'] != '') {
@@ -17,7 +18,7 @@ if (isset($_GET['search']) && $_GET['search'] != '') {
 <h1 class="text-3xl font-bold mb-4">Student Management System</h1>
 
 
-<a href="students/create.php">Add Student</a>
+<a href="students/create.php" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded font-semibold">Add Student</a>
 <br><br>
 
 <form method="GET">
