@@ -14,12 +14,16 @@ $stmt->close();
 
 if($_SERVER['REQUEST_METHOD'] == "POST"){
     $full_name = $_POST['full_name'];
-    $sql = "UPDATE students SET full_name = ? WHERE id = ?";
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
+    $course = $_POST['course'];
+    $sql = "UPDATE students SET full_name=?, email=?, phone=?, course=? WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("si", $full_name, $id);
-
+    if(!$stmt){
+        die("prepare failed" . $conn->error);
+    }
+    $stmt->bind_param("ssssi", $full_name, $email, $phone, $course, $id);
     if($stmt->execute()){
-        echo '<p class="bg-green-100 text-green-700 p-3 rounded mb-4">Student Updated Successfully!</p>';
         header("Location: ../index.php");
         exit;
     }
@@ -31,7 +35,16 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 
 <form method="POST">
     <div class="mb-4">
-        <input type="text" name="full_name" value="<?= htmlspecialchars($student['full_name']) ?>" class="border p-2 rounded w-full">
+        <input type="text" name="full_name" value="<?= htmlspecialchars($student['full_name']) ?>" class="border p-2 rounded w-full" required>
+    </div>
+    <div class="mb-4">
+        <input type="email" name="email" value="<?= htmlspecialchars($student['email']) ?>" class="border p-2 rounded w-full" required>
+    </div>
+    <div class="mb-4">
+        <input type="text" name="phone" value="<?= htmlspecialchars($student['phone']) ?>" class="border p-2 rounded w-full" required>
+    </div>
+    <div class="mb-4">
+        <input type="text" name="course" value="<?= htmlspecialchars($student['course']) ?>" class="border p-2 rounded w-full" required>
     </div>
     <button type="submit" class="bg-yellow-500 text-white px-4 py-2 rounded">Update Student</button>
 </form>

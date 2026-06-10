@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,7 +11,7 @@
 <body>
 <div class="max-w mx-auto position-absolute">
 <nav class="fixed top-0 left-0 right-0 bg-gray-900 text-white py-4 shadow-lg">
-    <div class="max-w-5xl mx-auto px-6 flex justify-between item-center">
+    <div class="max-w-5xl mx-auto px-6 flex justify-between items-center">
         <h1 class="text-2xl font-bold">StudentHUB</h1>
         <div class="flex gap-4">
             <a href="index.php" class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded font-semibold">Home</a>

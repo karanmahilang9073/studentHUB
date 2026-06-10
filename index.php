@@ -22,8 +22,6 @@ if (isset($_GET['search']) && $_GET['search'] != '') {
     <p class="mb-4 text-gray-600 text-3xl">Welcome, <strong><?= htmlspecialchars($_SESSION['username'])?></strong></p>
 <?php endif;?>
 
-
-
 <a href="students/create.php" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded font-semibold">Add Student</a>
 <br><br>
 
