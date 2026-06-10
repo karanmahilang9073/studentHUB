@@ -6,12 +6,18 @@ if (isset($_GET['search']) && $_GET['search'] != '') {
     $search = "%" . $_GET['search'] . "%";
     $sql = "SELECT * FROM students WHERE full_name LIKE ?";
     $stmt = $conn->prepare($sql);
+    if(!$stmt){
+        die('prepare failed: ' . $conn->error);
+    }
     $stmt->bind_param("s", $search);
     $stmt->execute();
     $result = $stmt->get_result();
-} else {
-    $result = mysqli_query($conn, "SELECT * FROM students");
-}
+    } else {
+        $result = mysqli_query($conn, "SELECT * FROM students");
+    }
+    if(isset($stmt)){
+        $stmt->close();
+    }
 ?>
 
 <?php require_once 'includes/header.php'; ?>
@@ -37,6 +43,12 @@ $count = mysqli_fetch_assoc($countResult);
 ?>
 
 <p>Total Students: <?= $count['total'] ?></p>
+
+<?php
+if(mysqli_num_rows($result) == 0){
+    echo '<p class="text-red-500">No student found</p>';
+}
+?>
 
 <table class="w-full border border-gray-300 mt-4">
     <tr>

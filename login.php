@@ -1,14 +1,16 @@
 <?php
 session_start();
 require_once 'config/db.php';
-require_once 'includes/header.php';
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    $username = trim($_POST['username']);
+    $password = trim($_POST['password']);
 
     $sql = "SELECT * FROM users WHERE username = ?";
     $stmt = $conn->prepare($sql);
+    if(!$stmt){
+        die('failed prepare: '. $conn->error);
+    }
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -17,11 +19,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['username'] = $user['username'];
         header("Location: index.php");
+        exit;
     } else {
-        echo "invalid credentials";
+        $error = "invalid username or password";
     }
+    $stmt->close();
 }
 ?>
+
+<?php require_once 'includes/header.php' ?>
 
 <div class="max-w-md mx-auto mt-16 bg-white p-8 rounded-lg shadow-md">
     <h2 class="text-3xl font-bold mb-6 text-center text-gray-800">Login</h2>
