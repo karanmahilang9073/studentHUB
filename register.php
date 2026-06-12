@@ -7,10 +7,11 @@
         $username = $_POST['username'];
         $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
         $email = $_POST['email'];
+        $role = 'student';
         
-        $sql = "INSERT INTO users(username, password, email) VALUES(?, ?, ?)";
+        $sql = "INSERT INTO users(username, password, email, role) VALUES(?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sss", $username, $password, $email);
+        $stmt->bind_param("ssss", $username, $password, $email, $role);
         
         if($stmt->execute()){
             echo '<p class="bg-green-100 text-green-700 p-3 rounded mb-4">registered successfullly!</p>';

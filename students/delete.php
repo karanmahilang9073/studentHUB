@@ -1,6 +1,6 @@
+<?php require_once '../admin_only.php' ; ?>
 <?php
 require_once '../config/db.php';
-require_once '../auth.php';
 $id = $_GET['id'];
 $sql = "DELETE FROM students WHERE id=?";
 $stmt = $conn->prepare($sql);

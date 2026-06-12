@@ -1,6 +1,6 @@
 <?php
 require_once '../config/db.php';
-require_once '../auth.php';
+require_once '../admin_only.php' ;
 require_once '../includes/header.php';
 
 $id = $_GET['id'];

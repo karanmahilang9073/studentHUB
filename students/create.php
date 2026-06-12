@@ -1,4 +1,4 @@
-<?php require_once '../auth.php'; ?>
+<?php require_once '../admin_only.php' ; ?>
 <?php require_once '../includes/header.php'; ?>
 <h2 class="text-2xl font-bold mb-4">Add Student</h2>
 
