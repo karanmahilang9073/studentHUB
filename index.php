@@ -1,10 +1,14 @@
 <?php
 session_start();
 require_once 'config/db.php';
+$limit = 5;
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$page = max($page, 1);
+$offset = ($page - 1) * $limit;
 
 if (isset($_GET['search']) && $_GET['search'] != '') {
     $search = "%" . $_GET['search'] . "%";
-    $sql = "SELECT * FROM students WHERE full_name LIKE ?";
+    $sql = "SELECT * FROM students WHERE full_name LIKE ? LIMIT $limit OFFSET $offset";
     $stmt = $conn->prepare($sql);
     if(!$stmt){
         die('prepare failed: ' . $conn->error);
@@ -13,7 +17,7 @@ if (isset($_GET['search']) && $_GET['search'] != '') {
     $stmt->execute();
     $result = $stmt->get_result();
     } else {
-        $result = mysqli_query($conn, "SELECT * FROM students");
+        $result = mysqli_query($conn, "SELECT * FROM students LIMIT $limit OFFSET $offset");
     }
     if(isset($stmt)){
         $stmt->close();
@@ -40,6 +44,7 @@ if (isset($_GET['search']) && $_GET['search'] != '') {
 <?php
 $countResult = mysqli_query($conn, "SELECT COUNT(*) as total FROM students");
 $count = mysqli_fetch_assoc($countResult);
+$totalpage = ceil($count['total'] / $limit);
 ?>
 
 <p>Total Students: <?= $count['total'] ?></p>
@@ -78,5 +83,21 @@ if(mysqli_num_rows($result) == 0){
     <?php } ?>
 </table>
 
+<div class="mt-4 flex gap-2 justify-center">
+    <?php if($page > 1): ?>
+        <a href="?page=<?= $page-1 ?>" class="px-3 py-1 bg-gray-300 rounded">Prev</a>
+    <?php endif; ?>
+
+    <?php for($i=1; $i<=$totalpage; $i++): ?>
+        <a href="?page=<?= $i ?>"
+        class="px-3 py-1 border rounded <?= ($i==$page) ? 'bg-blue-500 text-white' : '' ?>">
+        <?= $i ?>
+        </a>
+    <?php endfor; ?>
+
+    <?php if($page < $totalpage): ?>
+        <a href="?page=<?= $page+1 ?>" class="px-3 py-1 bg-gray-300 rounded">Next</a>
+    <?php endif; ?>
+</div>
 
 <?php require_once 'includes/footer.php'; ?>
