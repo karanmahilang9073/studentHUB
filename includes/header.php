@@ -15,14 +15,14 @@ session_start();
         <h1 class="text-2xl font-bold">StudentHUB</h1>
         <div class="flex gap-4">
             <?php if(isset($_SESSION['role']) &&  $_SESSION['role'] === 'admin'): ?>
-                <a href="admin/index.php" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded font-semibold">Admin panel</a>
+                <a href="/studentHUB/admin/index.php" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded font-semibold">Admin panel</a>
             <?php endif; ?>
-            <a href="index.php" class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded font-semibold">Home</a>
+            <a href="/studentHUB/index.php" class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded font-semibold">Home</a>
             <?php if(isset($_SESSION['user_id'])): ?>
-                <a href="profile.php" class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded font-semibold">profile</a>
-                <a href="logout.php" class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded font-semibold">Logout</a>
+                <a href="/studentHUB/profile.php" class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded font-semibold">profile</a>
+                <a href="/studentHUB/logout.php" class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded font-semibold">Logout</a>
             <?php else: ?>
-                <a href="login.php" class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded font-semibold">Login</a>
+                <a href="/studentHUB/login.php" class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded font-semibold">Login</a>
             <?php endif; ?>
         </div>
     </div>
